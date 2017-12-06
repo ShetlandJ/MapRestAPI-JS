@@ -51,14 +51,7 @@ var countryInfo = function(country){
   var countryName = document.getElementById('country-name');
   var countryPop = document.getElementById('country-pop');
   var countryCapital = document.getElementById('country-capital');
-  var countryCode = document.getElementById('country-code');
   var borders = document.getElementById('borders');
-
-  countryName.innerText = "Name: " + country.name;
-  countryPop.innerText = "Population: " + country.population;
-  countryCapital.innerText = "Capital: " + country.capital;
-  countryCode.innerText = "Code: " + country.alpha3Code;
-  borders.innerText = "";
 
   var borderArray = [];
 
@@ -66,23 +59,35 @@ var countryInfo = function(country){
     borderArray.push(borderCountry);
   }
 
+  countryName.innerText = "Name: " + country.name;
+  countryPop.innerText = "Population: " + country.population;
+  countryCapital.innerText = "Capital: " + country.capital;
   borders.innerText = "It borders: " + borderArray;
+
+  var map = document.getElementById('main-map');
+  var center = {lat: country.latlng[0], lng: country.latlng[1]};
+  var mainMap = new MapWrapper(map, center, 5);
+
+  var flagUrl = country.flag;
+
+
+  mainMap.addMarker(center, "This is the country of " + country.name + ". It has a population of " + country.population + " and its capital city is " + country.capital + ". It's national flag looks like this:" + '</br><img src=' + flagUrl + ' style="height: 150px; float: center">')
 
   container.appendChild(countryName);
   container.appendChild(countryPop);
   container.appendChild(countryCapital);
-  container.appendChild(countryCode);
   container.appendChild(borders);
+  container.appendChild(map);
 
 };
 
-var getCountryByCode = function(countries, countryCode){
-  for (var country of countries) {
-    if (country.alpha3Code === countryCode) {
-      return country.name;
-    }
-  }
-}
+// var getCountryByCode = function(countries, countryCode){
+//   for (var country of countries) {
+//     if (country.alpha3Code === countryCode) {
+//       return country.name;
+//     }
+//   }
+// }
 
 var app = function(){
 
