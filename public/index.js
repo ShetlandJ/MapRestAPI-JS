@@ -25,11 +25,11 @@ var requestComplete = function(){
 
 var populateList = function(countries){
 
-  var ul = document.getElementById('country-list');
+  var select = document.getElementById('country-list');
   for (var country of countries) {
-    var li = document.createElement('li');
-    li.innerText = country.name;
-    ul.appendChild(li);
+    var option = document.createElement('option');
+    option.innerText = country.name;
+    select.appendChild(option);
   }
 }
 
