@@ -19,15 +19,6 @@ var requestComplete = function(){
   populateList(countries);
 }
 
-var requestComplete2 = function(){
-  if (this.status !== 200) return;
-  var jsonString = this.responseText;
-  var countries = JSON.parse(jsonString);
-  var dropDownValue = document.querySelector('select').value;
-  countryInfo(countries, dropDownValue)
-}
-
-
 var populateList = function(countries){
 
   var select = document.getElementById('country-list');
