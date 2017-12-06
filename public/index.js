@@ -68,7 +68,6 @@ var countryInfo = function(country){
 
   var flagUrl = country.flag;
 
-
   mainMap.addMarker(center, "This is the country of " + country.name + ". It has a population of " + country.population + " and its capital city is " + country.capital + ". It's national flag looks like this:" + '</br><img src=' + flagUrl + ' style="height: 150px; float: center">')
 
   container.appendChild(countryName);
@@ -78,14 +77,6 @@ var countryInfo = function(country){
   container.appendChild(map);
 
 };
-
-// var getCountryByCode = function(countries, countryCode){
-//   for (var country of countries) {
-//     if (country.alpha3Code === countryCode) {
-//       return country.name;
-//     }
-//   }
-// }
 
 var app = function(){
 
