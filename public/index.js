@@ -33,6 +33,29 @@ var populateList = function(countries){
   }
 }
 
+var countryInfo = function(countries){
+
+  var container = document.getElementById('country-container');
+  for (var country of countries) {
+    var countryName = document.createElement('p');
+    var countryPop = document.createElement('p');
+    var countryCapital = document.createElement('p');
+
+    countryName.innerText = country.name;
+    countryPop.innerText = country.population;
+    countryCapital.innerText = country.capital;
+
+    container.appendChild(countryName);
+    container.appendChild(countryPop);
+    container.appendChild(countryCapital);
+
+  }
+}
+
+
+// Display the country name, population, capital city of the country that is selected.
+
+
 var app = function(){
 
   var button = document.getElementById("load");
