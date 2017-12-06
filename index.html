@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Country App</title>
-    <script src='index.js'></script>
-  </head>
-  <body>
-    <h1>Countries</h1>
-    <button id="load">Load</button>
-    </br>
-    <select id='country-list'>
-      <option disabled selected>
-        Pick a country!
-      </option>
-    </select>
-    <div id="country-container">
+<head>
+  <title>Country App</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src='index.js'></script>
+  <script src='MapWrapper.js'></script>
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+</head>
+<body>
+  <h1>Countries</h1>
+  <button id="load">Load</button>
+</br>
+<select id='country-list'>
+  <option disabled selected>
+    Pick a country!
+  </option>
+</select>
+<div id="country-container">
   <p id='country-name'></p>
   <p id='country-pop'></p>
   <p id='country-capital'></p>
   <p id='country-code'></p>
   <p id='borders'></p>
 
+  <div id="main-map">
 
-    </div>
-  </body>
+  </div>
+
+
+
+</div>
+</body>
 </html>
