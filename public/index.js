@@ -13,58 +13,76 @@ var makeRequest = function(url, callback){
 }
 
 var requestComplete = function(){
-
   if (this.status !== 200) return;
-
   var jsonString = this.responseText;
-
   var countries = JSON.parse(jsonString);
   populateList(countries);
 }
 
 var requestComplete2 = function(){
-
   if (this.status !== 200) return;
-
   var jsonString = this.responseText;
-
   var countries = JSON.parse(jsonString);
-
   var dropDownValue = document.querySelector('select').value;
-
   countryInfo(countries, dropDownValue)
 }
+
 
 var populateList = function(countries){
 
   var select = document.getElementById('country-list');
-  for (var country of countries) {
+  countries.forEach(function(country, index){
     var option = document.createElement('option');
     option.innerText = country.name;
+    option.value = index;
     select.appendChild(option);
-  }
+  });
+
+  var dropDown = document.querySelector('select');
+
+  dropDown.addEventListener("change", function(){
+    var selectedCountry = countries[this.value]
+    countryInfo(selectedCountry)
+  });
 }
 
-var countryInfo = function(countries, countryName){
+var countryInfo = function(country){
+  var container = document.getElementById('country-container');
+  var countryName = document.getElementById('country-name');
+  var countryPop = document.getElementById('country-pop');
+  var countryCapital = document.getElementById('country-capital');
+  var countryCode = document.getElementById('country-code');
+  var borders = document.getElementById('borders');
 
+  countryName.innerText = "Name: " + country.name;
+  countryPop.innerText = "Population: " + country.population;
+  countryCapital.innerText = "Capital: " + country.capital;
+  countryCode.innerText = "Code: " + country.alpha3Code;
+  borders.innerText = "";
 
-  for (country of countries) {
-    if (country.name === countryName) {
-      var container = document.getElementById('country-container');
-      var countryName = document.getElementById('country-name');
-      var countryPop = document.getElementById('country-pop');
-      var countryCapital = document.getElementById('country-capital');
+  var borderArray = [];
 
-      countryName.innerText = "Name: " + country.name;
-      countryPop.innerText = "Population: " + country.population;
-      countryCapital.innerText = "Capital: " + country.capital;
+  for (var borderCountry of country.borders) {
+    borderArray.push(borderCountry);
+  }
 
-      container.appendChild(countryName);
-      container.appendChild(countryPop);
-      container.appendChild(countryCapital);
+  borders.innerText = "It borders: " + borderArray;
+
+  container.appendChild(countryName);
+  container.appendChild(countryPop);
+  container.appendChild(countryCapital);
+  container.appendChild(countryCode);
+  container.appendChild(borders);
+
+};
+
+var getCountryByCode = function(countries, countryCode){
+  for (var country of countries) {
+    if (country.alpha3Code === countryCode) {
+      return country.name;
     }
   }
-};
+}
 
 var app = function(){
 
@@ -76,17 +94,7 @@ var app = function(){
     makeRequest(url, requestComplete)
   });
 
-  var dropDown = document.querySelector('select');
-  var dropDownValue = document.querySelector('select').value;
-  dropDown.addEventListener("change", function(){
-    makeRequest(url, requestComplete2)
-  });
-
-  var selector = JSON.parse(localStorage.getItem('selectorList')) || [];
-  populate(selector);
-
 }
-
 
 
 window.addEventListener('load', app);
