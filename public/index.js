@@ -19,10 +19,15 @@ var requestComplete = function(){
   populateList(countries);
 }
 
+var myObject = {};
+
 var populateList = function(countries){
 
+  var countriesAndCodes = {}
   var select = document.getElementById('country-list');
   countries.forEach(function(country, index){
+
+    // console.log('"' + country.name + '"' + ": " + country.alpha3Code + ",");
     var option = document.createElement('option');
     option.innerText = country.name;
     option.value = index;
@@ -46,8 +51,10 @@ var countryInfo = function(country){
 
   var borderArray = [];
 
-  for (var borderCountry of country.borders) {
-    borderArray.push(borderCountry);
+  for (var borderCountryCode of country.borders) {
+    var countryCode = new CountryCodes();
+    var countryCodeConverted = countryCode.getCountryByCode(borderCountryCode);
+    borderArray.push(" " + countryCodeConverted);
   }
 
   countryName.innerText = "Name: " + country.name;
