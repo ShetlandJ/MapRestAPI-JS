@@ -47,13 +47,13 @@ var populateList = function(countries){
 
 var countryInfo = function(countries, countryName){
 
-  var container = document.getElementById('country-container');
 
   for (country of countries) {
     if (country.name === countryName) {
-      var countryName = document.createElement('p');
-      var countryPop = document.createElement('p');
-      var countryCapital = document.createElement('p');
+      var container = document.getElementById('country-container');
+      var countryName = document.getElementById('country-name');
+      var countryPop = document.getElementById('country-pop');
+      var countryCapital = document.getElementById('country-capital');
 
       countryName.innerText = "Name: " + country.name;
       countryPop.innerText = "Population: " + country.population;
@@ -81,6 +81,10 @@ var app = function(){
   dropDown.addEventListener("change", function(){
     makeRequest(url, requestComplete2)
   });
+
+  var selector = JSON.parse(localStorage.getItem('selectorList')) || [];
+  populate(selector);
+
 }
 
 
