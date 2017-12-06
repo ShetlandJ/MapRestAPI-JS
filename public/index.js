@@ -31,21 +31,22 @@ var requestComplete2 = function(){
 var populateList = function(countries){
 
   var select = document.getElementById('country-list');
-  countries.forEach(function(country){
+  countries.forEach(function(country, index){
     var option = document.createElement('option');
     option.innerText = country.name;
+    option.value = index;
     select.appendChild(option);
   });
 
   var dropDown = document.querySelector('select');
-  var dropDownValue = document.querySelector('select').value;
+
   dropDown.addEventListener("change", function(){
-    countryInfo(dropDownValue)
+    var selectedCountry = countries[this.value]
+    countryInfo(selectedCountry)
   });
 }
 
 var countryInfo = function(country){
-
   var container = document.getElementById('country-container');
   var countryName = document.getElementById('country-name');
   var countryPop = document.getElementById('country-pop');
@@ -59,14 +60,14 @@ var countryInfo = function(country){
   countryCode.innerText = "Code: " + country.alpha3Code;
   borders.innerText = "";
 
-  // var borderArray = [];
-  //
-  // for (var borderCountry of country.borders) {
-  //   borderArray.push(borderCountry);
-  // }
-  //
-  // borders.innerText = "It borders: " + borderArray;
-  //
+  var borderArray = [];
+
+  for (var borderCountry of country.borders) {
+    borderArray.push(borderCountry);
+  }
+
+  borders.innerText = "It borders: " + borderArray;
+
   container.appendChild(countryName);
   container.appendChild(countryPop);
   container.appendChild(countryCapital);
