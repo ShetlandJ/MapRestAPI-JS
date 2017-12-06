@@ -19,8 +19,20 @@ var requestComplete = function(){
   var jsonString = this.responseText;
 
   var countries = JSON.parse(jsonString);
-
   populateList(countries);
+}
+
+var requestComplete2 = function(){
+
+  if (this.status !== 200) return;
+
+  var jsonString = this.responseText;
+
+  var countries = JSON.parse(jsonString);
+
+  var dropDownValue = document.querySelector('select').value;
+
+  countryInfo(countries, dropDownValue)
 }
 
 var populateList = function(countries){
@@ -33,37 +45,41 @@ var populateList = function(countries){
   }
 }
 
-var countryInfo = function(countries){
+var countryInfo = function(countries, countryName){
 
   var container = document.getElementById('country-container');
-  for (var country of countries) {
-    var countryName = document.createElement('p');
-    var countryPop = document.createElement('p');
-    var countryCapital = document.createElement('p');
 
-    countryName.innerText = country.name;
-    countryPop.innerText = country.population;
-    countryCapital.innerText = country.capital;
+  for (country of countries) {
+    if (country.name === countryName) {
+      var countryName = document.createElement('p');
+      var countryPop = document.createElement('p');
+      var countryCapital = document.createElement('p');
 
-    container.appendChild(countryName);
-    container.appendChild(countryPop);
-    container.appendChild(countryCapital);
+      countryName.innerText = "Name: " + country.name;
+      countryPop.innerText = "Population: " + country.population;
+      countryCapital.innerText = "Capital: " + country.capital;
 
+      container.appendChild(countryName);
+      container.appendChild(countryPop);
+      container.appendChild(countryCapital);
+    }
   }
-}
-
-
-// Display the country name, population, capital city of the country that is selected.
-
+};
 
 var app = function(){
 
   var button = document.getElementById("load");
+  var url = "https://restcountries.eu/rest/v2/all";
 
   button.addEventListener('click', function(){
     this.disabled = "disabled";
-    var url = "https://restcountries.eu/rest/v2/all";
     makeRequest(url, requestComplete)
+  });
+
+  var dropDown = document.querySelector('select');
+  var dropDownValue = document.querySelector('select').value;
+  dropDown.addEventListener("change", function(){
+    makeRequest(url, requestComplete2)
   });
 }
 
